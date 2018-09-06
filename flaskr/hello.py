@@ -49,7 +49,7 @@ def realtime():
     # print("天气: " + WeatherEnum[weather].value)
     wind = json["result"]["wind"]
     # print(wind)
-    realtime_context=f'当前时刻天气 -> 人体感觉: {desc} , PM2.5值:{pm25}, 天气: {WeatherEnum[weather].value}'
+    realtime_context=f'now 人体感觉: {desc} , PM2.5值:{pm25}, 天气: {WeatherEnum[weather].value}'
     print(realtime_context)
     # pprint(r.json())
 
@@ -84,7 +84,7 @@ def forecast():
         rain_time_list = []
         for item in rain_list:
             rain_time_list.append(item['datetime'])
-            forecast_context="{}  接下来的{}个小时内有雨哦,分别是{}".format(forecast_keypoint,len(skycon_scope_list), str(rain_time_list))
+            forecast_context="接下来的{}个小时内有雨哦,分别是{}".format(len(skycon_scope_list), str(rain_time_list))
         print(forecast_context)
 
 if __name__ == '__main__':

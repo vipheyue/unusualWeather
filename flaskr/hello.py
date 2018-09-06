@@ -8,6 +8,8 @@ import requests
 from flask import Flask, request, url_for
 import config
 
+from flaskr.WeatherEnum import WeatherEnum
+
 app = Flask(__name__)
 app.config.from_object(config)
 
@@ -37,12 +39,36 @@ def show_user_profile(username):
 #     print(url_for('hello', username='John Doe'))
 
 
-def netTest():
+def realtime():
     url = 'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/121.6544,25.1552/realtime.json'
     r = requests.get(url)
-    # r.json()
-    pprint(r.json())
+    json=r.json()
+    desc=json["result"]["comfort"]['desc']
+    print("人体感觉: "+desc)
+    pm25=json["result"]["pm25"]
+    print("PM2.5: "+str(pm25))
+    weather=str(json["result"]["skycon"])
+    print("天气: "+WeatherEnum[weather].value)
+    wind=json["result"]["wind"]
+    print(wind)
+    # pprint(r.json())
+
+
+
+def forecast():
+    url = 'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/121.6544,25.1552/forecast.json'
+    r = requests.get(url)
+    json = r.json()
+    forecast_keypoint=json["result"]["forecast_keypoint"]
+    print(forecast_keypoint)
+    skyconList=json["result"]['hourly']["skycon"]
+    print(skyconList)
+    print(str(skyconList))
+
+    # pprint(r.json())
+
 
 if __name__ == '__main__':
     # app.run()
-    netTest()
+    # realtime()
+    forecast()

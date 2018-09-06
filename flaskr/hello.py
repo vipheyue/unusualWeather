@@ -1,3 +1,10 @@
+# encoding:utf-8
+from pprint import pprint
+
+import requests
+
+
+
 from flask import Flask, request, url_for
 import config
 
@@ -30,7 +37,12 @@ def show_user_profile(username):
 #     print(url_for('hello', username='John Doe'))
 
 
+def netTest():
+    url = 'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/121.6544,25.1552/realtime.json'
+    r = requests.get(url)
+    # r.json()
+    pprint(r.json())
 
 if __name__ == '__main__':
-    print("main")
-    app.run()
+    # app.run()
+    netTest()

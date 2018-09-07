@@ -2,7 +2,8 @@
 from pprint import pprint
 
 import requests
-
+import schedule
+import time
 from flask import Flask, request, url_for
 import config
 
@@ -37,8 +38,8 @@ def show_user_profile(username):
 #     print(url_for('hello', username='John Doe'))
 
 
-def realtime():
-    url = 'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/121.6544,25.1552/realtime.json'
+def realtime(longitude, latitude):
+    url = f'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/{longitude},{latitude}/realtime.json'
     r = requests.get(url)
     json = r.json()
     desc = json["result"]["comfort"]['desc']
@@ -49,13 +50,14 @@ def realtime():
     # print("天气: " + WeatherEnum[weather].value)
     wind = json["result"]["wind"]
     # print(wind)
-    realtime_context=f'now 人体感觉: {desc} , PM2.5值:{pm25}, 天气: {WeatherEnum[weather].value}'
-    print(realtime_context)
+    realtime_context = f'当前 人体感觉:{desc},雾霾值:{pm25},天气:{WeatherEnum[weather].value} '
+    # print(realtime_context)
+    return realtime_context
     # pprint(r.json())
 
 
-def forecast():
-    url = 'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/121.6544,25.1552/forecast.json'
+def forecast(longitude, latitude):
+    url = f'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/{longitude},{latitude}/forecast.json'
     r = requests.get(url)
     json = r.json()
     forecast_keypoint = json["result"]["forecast_keypoint"]
@@ -75,19 +77,44 @@ def forecast():
     for item in skycon_scope_list:
         if item['value'] == WeatherEnum.RAIN.name:
             rain_list.append(item)
-
-
         # print(item['value'])
-    # pprint(r.json())
 
     if len(rain_list) > 0:
         rain_time_list = []
         for item in rain_list:
             rain_time_list.append(item['datetime'])
-            forecast_context="接下来的{}个小时内有雨哦,分别是{}".format(len(skycon_scope_list), str(rain_time_list))
-        print(forecast_context)
+        forecast_context = " 接下来的{}个小时内有雨哦,分别是{}".format(len(skycon_scope_list), str(rain_time_list))
+        # print(forecast_context)
+        realtime_context = realtime(longitude, latitude)
+        result=realtime_context + forecast_context
+        print(result)
+        return result
+    else:
+        print("未来几个小时 暂时没有雨哦")
+        return
+
+
+def job():
+    # 121.6544,25.1552
+
+    # longitude = 116.298056  # 经度
+    # latitude = 39.959912  # 纬度
+    longitude = 121.6544  # 经度
+    latitude = 25.1552  # 纬度
+    # realtime(longitude, latitude)
+    forecast(longitude, latitude)
+
+
+def schedule_task():
+    schedule.every(2).seconds.do(job)
+    # schedule.every().day.at("10:37").do(job)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 
 if __name__ == '__main__':
     # app.run()
-    realtime()
-    forecast()
+
+    schedule_task()

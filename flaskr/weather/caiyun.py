@@ -1,49 +1,5 @@
-# encoding:utf-8
-from pprint import pprint
-
 import requests
-import schedule
-import time
-from flask import Flask, request, url_for
-import config
-
 from flaskr.WeatherEnum import WeatherEnum
-from flaskr.notice.mail import send_email
-
-app = Flask(__name__)
-app.config.from_object(config)
-
-
-@app.route('/', methods=['GET', 'POST'])
-def hello_world():
-    return 'Hello, World!!!!+++'
-
-
-@app.route('/unusualWeather', methods=['GET', 'POST'])
-def unusual_weather():
-    if request.method == 'POST':
-        longitude = request.form['longitude']
-        latitude = request.form['latitude']
-        receiverEmail = request.form['receiverEmail']
-        result = check_unuaual_weather(longitude, latitude)
-        if result != '':
-            # 发送邮件
-            send_email(receiverEmail, result)
-            return result
-    else:
-        return 'get method  no support'
-
-
-@app.route('/user/<username>')
-def show_user_profile(username):
-    # show the user profile for that user
-    return 'User %s' % username
-
-
-# with app.test_request_context():
-#     print(url_for('hello'))
-#     print(url_for('hello', username='John Doe'))
-
 
 def realtime(longitude, latitude):
     url = f'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/{longitude},{latitude}/realtime.json'
@@ -64,6 +20,8 @@ def realtime(longitude, latitude):
 
 
 def check_unuaual_weather(longitude, latitude):
+
+
     url = f'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/{longitude},{latitude}/forecast.json'
     r = requests.get(url)
     json = r.json()
@@ -99,30 +57,3 @@ def check_unuaual_weather(longitude, latitude):
     else:
         return ''
 
-
-def job():
-    # 121.6544,25.1552
-
-    longitude = 116.298056  # 经度
-    latitude = 39.959912  # 纬度
-    # longitude = 121.6544  # 经度
-    # latitude = 25.1552  # 纬度
-    # realtime(longitude, latitude)
-    result = check_unuaual_weather(longitude, latitude)
-    if result != '':
-        # 发送邮件
-        send_email("vipheyue@foxmail.com", result)
-        return result
-
-
-def schedule_task():
-    # schedule.every(2).seconds.do(job)
-    schedule.every().day.at("7:25").do(job)
-    while True:
-        schedule.run_pending()
-        time.sleep(20)
-
-
-if __name__ == '__main__':
-    # app.run()
-    schedule_task()

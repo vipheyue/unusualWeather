@@ -116,13 +116,13 @@ def job():
 
 
 def schedule_task():
-    schedule.every(2).seconds.do(job)
-    # schedule.every().day.at("10:37").do(job)
+    # schedule.every(2).seconds.do(job)
+    schedule.every().day.at("7:25").do(job)
     while True:
         schedule.run_pending()
-        time.sleep(1)
+        time.sleep(20)
 
 
 if __name__ == '__main__':
-    app.run()
-    # schedule_task()
+    # app.run()
+    schedule_task()

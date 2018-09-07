@@ -8,6 +8,7 @@ from flask import Flask, request, url_for
 import config
 
 from flaskr.WeatherEnum import WeatherEnum
+from flaskr.notice.mail import send_email
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -18,13 +19,19 @@ def hello_world():
     return 'Hello, World!!!!+++'
 
 
-@app.route('/hello', methods=['GET', 'POST'])
-def hello():
+@app.route('/unusualWeather', methods=['GET', 'POST'])
+def unusual_weather():
     if request.method == 'POST':
-        username = request.form['username']
-        return 'Hello, hello post' + username
+        longitude = request.form['longitude']
+        latitude = request.form['latitude']
+        receiverEmail = request.form['receiverEmail']
+        result = check_unuaual_weather(longitude, latitude)
+        if result != '':
+            # 发送邮件
+            send_email(receiverEmail, result)
+            return result
     else:
-        return 'get'
+        return 'get method  no support'
 
 
 @app.route('/user/<username>')
@@ -56,7 +63,7 @@ def realtime(longitude, latitude):
     # pprint(r.json())
 
 
-def forecast(longitude, latitude):
+def check_unuaual_weather(longitude, latitude):
     url = f'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/{longitude},{latitude}/forecast.json'
     r = requests.get(url)
     json = r.json()
@@ -86,35 +93,36 @@ def forecast(longitude, latitude):
         forecast_context = " 接下来的{}个小时内有雨哦,分别是{}".format(len(skycon_scope_list), str(rain_time_list))
         # print(forecast_context)
         realtime_context = realtime(longitude, latitude)
-        result=realtime_context + forecast_context
+        result = realtime_context + "\n" + forecast_context
         print(result)
         return result
     else:
-        print("未来几个小时 暂时没有雨哦")
-        return
+        return ''
 
 
 def job():
     # 121.6544,25.1552
 
-    # longitude = 116.298056  # 经度
-    # latitude = 39.959912  # 纬度
-    longitude = 121.6544  # 经度
-    latitude = 25.1552  # 纬度
+    longitude = 116.298056  # 经度
+    latitude = 39.959912  # 纬度
+    # longitude = 121.6544  # 经度
+    # latitude = 25.1552  # 纬度
     # realtime(longitude, latitude)
-    forecast(longitude, latitude)
+    result = check_unuaual_weather(longitude, latitude)
+    if result != '':
+        # 发送邮件
+        send_email("vipheyue@foxmail.com", result)
+        return result
 
 
 def schedule_task():
     schedule.every(2).seconds.do(job)
     # schedule.every().day.at("10:37").do(job)
-
     while True:
         schedule.run_pending()
         time.sleep(1)
 
 
 if __name__ == '__main__':
-    # app.run()
-
-    schedule_task()
+    app.run()
+    # schedule_task()

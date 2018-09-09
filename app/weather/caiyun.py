@@ -1,5 +1,5 @@
 import requests
-from flaskr.WeatherEnum import WeatherEnum
+from app.WeatherEnum import WeatherEnum
 
 def realtime(longitude, latitude):
     url = f'https://api.caiyunapp.com/v2/Kg47BflU7B5pPOGN/{longitude},{latitude}/realtime.json'

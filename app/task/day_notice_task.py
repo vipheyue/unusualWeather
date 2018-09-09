@@ -1,7 +1,7 @@
 import schedule
 import time
-from flaskr.notice.mail import send_email
-from flaskr.weather.caiyun import check_unuaual_weather, realtime
+from app.notice.mail import send_email
+from app.weather.caiyun import check_unuaual_weather, realtime
 
 
 def job():
@@ -16,7 +16,6 @@ def job():
     if result != '':
         # 发送邮件
         send_email("vipheyue@foxmail.com", result)
-        return result
 
 
 def schedule_task():
@@ -29,15 +28,13 @@ def schedule_task():
 
 
 import logging
-from flaskr.log.log_manager import initLog
-from flaskr.log.test import testlog
+from app.log.log_manager import initLog
+from app.log.test import testlog
 
 logger = logging.getLogger('main.task')
 if __name__ == '__main__':
-
     # initLog()
     # logger.info("xcxcxc")
     # testlog()
 
     schedule_task()
-

@@ -4,8 +4,8 @@ from pprint import pprint
 from flask import Flask, request, url_for
 import config
 
-from flaskr.notice.mail import send_email
-from flaskr.weather.caiyun import check_unuaual_weather, realtime
+from app.notice.mail import send_email
+from app.weather.caiyun import check_unuaual_weather, realtime
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -27,6 +27,7 @@ def unusual_weather():
             # 发送邮件
             send_email(receiverEmail, result)
             return str(result)
+        return "no unusual weather."
     else:
         return 'get method  no support'
 
@@ -43,7 +44,12 @@ def show_user_profile(username):
     return 'User %s' % username
 
 
+def application(env, start_response):
+    str(env)
+    start_response('200 OK', [('Content-Type','text/html')])
+    return [b"Hello World------------------"]
+
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
 
     # schedule_task()

@@ -1,8 +1,6 @@
 # encoding:utf-8
 from pprint import pprint
 
-
-
 from flask import Flask, request, url_for
 import config
 
@@ -28,9 +26,15 @@ def unusual_weather():
         if result != '':
             # 发送邮件
             send_email(receiverEmail, result)
-            return result
+            return str(result)
     else:
         return 'get method  no support'
+
+
+@app.route('/sendMail', methods=['GET', 'POST'])
+def send_mail():
+    result = send_email("vipheyue@foxmail.com", "邮件测试")
+    return str(result)
 
 
 @app.route('/user/<username>')

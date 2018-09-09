@@ -53,7 +53,7 @@ def check_unuaual_weather(longitude, latitude):
         realtime_context = realtime(longitude, latitude)
         result = realtime_context + "\n" + forecast_context
         print(result)
-        return result
+        return str(result)
     else:
         return ''
 

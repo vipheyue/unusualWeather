@@ -17,8 +17,10 @@ def send_email(receiver, content):
         s.login(msg_from, passwd)
         s.sendmail(msg_from, receiver, msg.as_string())
         print("发送成功")
+        return True
     except s.SMTPException:
         print("发送失败" + receiver + content)
+        return False
     finally:
         s.quit()
 

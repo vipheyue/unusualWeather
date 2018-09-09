@@ -20,7 +20,7 @@ def job():
 
 def schedule_task():
     # schedule.every(2).seconds.do(job)
-    schedule.every().day.at("9:00").do(job)
+    schedule.every().day.at("7:30").do(job)
     schedule.every().day.at("22:30").do(job)
     while True:
         schedule.run_pending()

@@ -5,7 +5,7 @@ import time
 
 
 def start_web_app():
-    os.system("echo start_web_app---")
+    os.system("echo -------start---")
     os.system("cd /opt/unusualWeather/")
     os.system("git fetch —a ")
     os.system("git fetch origin master")

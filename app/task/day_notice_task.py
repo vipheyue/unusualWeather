@@ -30,7 +30,9 @@ def schedule_task():
     schedule.every().day.at("7:30").do(job)
     schedule.every().day.at("22:30").do(job)
 
-    schedule.every().day.at("10:16").do(dailyWeather)
+    schedule.every().day.at("7:30").do(dailyWeather)
+    schedule.every().day.at("11:40").do(dailyWeather)
+    schedule.every().day.at("18:00").do(dailyWeather)
     while True:
         schedule.run_pending()
         time.sleep(20)

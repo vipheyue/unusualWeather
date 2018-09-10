@@ -18,10 +18,19 @@ def job():
         send_email("vipheyue@foxmail.com", result)
 
 
+def dailyWeather():
+    longitude = 116.298056  # 经度-何悦
+    latitude = 39.959912  # 纬度
+    result = realtime(longitude, latitude)
+    send_email("vipheyue@foxmail.com", result)
+
+
 def schedule_task():
     # schedule.every(2).seconds.do(job)
     schedule.every().day.at("7:30").do(job)
     schedule.every().day.at("22:30").do(job)
+
+    schedule.every().day.at("10:16").do(dailyWeather)
     while True:
         schedule.run_pending()
         time.sleep(20)

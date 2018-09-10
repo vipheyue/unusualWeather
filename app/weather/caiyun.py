@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import requests
 from app.WeatherEnum import WeatherEnum
 
@@ -10,13 +12,14 @@ def realtime(longitude, latitude):
     pm25 = json["result"]["pm25"]
     # print("PM2.5: " + str(pm25))
     weather = str(json["result"]["skycon"])
+    temperature = str(json["result"]["temperature"])
     # print("天气: " + WeatherEnum[weather].value)
     wind = json["result"]["wind"]
     # print(wind)
-    realtime_context = f'当前 人体感觉:{desc},雾霾值:{pm25},天气:{WeatherEnum[weather].value} '
+    realtime_context = f'当前 人体感觉:{desc},温度:{temperature},雾霾值:{pm25},天气:{WeatherEnum[weather].value} '
     # print(realtime_context)
-    return realtime_context
     # pprint(r.json())
+    return realtime_context
 
 
 def check_unuaual_weather(longitude, latitude):
@@ -57,3 +60,8 @@ def check_unuaual_weather(longitude, latitude):
     else:
         return ''
 
+if __name__ == '__main__':
+
+    longitude = 116.298056  # 经度-何悦
+    latitude = 39.959912  # 纬度
+    realtime(longitude, latitude)

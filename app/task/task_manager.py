@@ -45,7 +45,7 @@ def add_job():
     g_scheduler.add_job(job, 'cron', hour=7, minute=26)
     g_scheduler.add_job(job, 'cron', hour=18, minute=1)
 
-    g_scheduler.add_job(job1, 'cron', hour=16, minute=57)
+    g_scheduler.add_job(job1, 'cron', hour=17, minute=1)
 
     g_scheduler.print_jobs()
 

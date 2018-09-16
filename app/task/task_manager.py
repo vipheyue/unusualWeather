@@ -17,10 +17,10 @@ def job1():
 def job():
     # 121.6544,25.1552
 
-    # longitude = 116.298056  # 经度-何悦
-    # latitude = 39.959912  # 纬度
-    longitude = 121.6544  # 经度
-    latitude = 25.1552  # 纬度
+    longitude = 116.298056  # 经度-何悦
+    latitude = 39.959912  # 纬度
+    # longitude = 121.6544  # 经度
+    # latitude = 25.1552  # 纬度
     # realtime(longitude, latitude)
     result = check_unuaual_weather(longitude, latitude)
     if result != '':
@@ -41,6 +41,10 @@ def add_job():
     # g_scheduler.add_job(dailyWeather, 'cron', hour=13, minute=14)
     g_scheduler.add_job(dailyWeather, 'cron', hour=7, minute=25)
     g_scheduler.add_job(dailyWeather, 'cron', hour=18, minute=0)
+
+    g_scheduler.add_job(job, 'cron', hour=7, minute=26)
+    g_scheduler.add_job(job, 'cron', hour=18, minute=1)
+
     g_scheduler.print_jobs()
 
 def get_jobs():

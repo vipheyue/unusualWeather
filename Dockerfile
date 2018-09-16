@@ -5,8 +5,9 @@ FROM python:3.7
 WORKDIR /unusualWeather
 
 # Copy the current directory contents into the container at /app
-ADD . /unusualWeather
+#ADD . /unusualWeather
 
+RUN git clone https://github.com/vipheyue/unusualWeather.git
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 

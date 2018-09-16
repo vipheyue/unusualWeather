@@ -1,5 +1,6 @@
 # encoding:utf-8
 from pprint import pprint
+import time
 
 from flask import Flask, request, url_for
 import config
@@ -13,7 +14,7 @@ app.config.from_object(config)
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
-    return 'Hello, World!!!!+++'
+    return 'Hello, World!!!!+++ %s' % time.asctime()
 
 
 @app.route('/unusualWeather', methods=['GET', 'POST'])
@@ -88,4 +89,5 @@ def application(env, start_response):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
+    # hello_world()
     # schedule_task()

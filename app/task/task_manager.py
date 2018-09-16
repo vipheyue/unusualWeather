@@ -1,17 +1,17 @@
 from datetime import datetime
 
+import pytz
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.blocking import BlockingScheduler
 import time
 from app.notice.mail import send_email
 from app.weather.caiyun import check_unuaual_weather, realtime
+from pytz import utc
 
-g_scheduler = BackgroundScheduler()
-
-
-# g_scheduler = BlockingScheduler()
+g_scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Shanghai'))
+# g_scheduler = BlockingScheduler(timezone=pytz.timezone('Asia/Shanghai'))
 def job1():
-    print("%s: 执行任务" % time.asctime())
+    print("执行任务时间: %s" % time.asctime())
 
 
 def job():
@@ -45,18 +45,23 @@ def add_job():
     g_scheduler.add_job(job, 'cron', hour=7, minute=26)
     g_scheduler.add_job(job, 'cron', hour=18, minute=1)
 
+    g_scheduler.add_job(job1, 'cron', hour=16, minute=57)
+
     g_scheduler.print_jobs()
+
 
 def get_jobs():
     jobs = g_scheduler.get_jobs()
     result = ""
     for job in jobs:
-        result += str(job)+"\n"
+        result += str(job) + "\n"
     # print(result)
     return result
 
 
 if __name__ == '__main__':
     add_job()
-    get_jobs()
+    g_scheduler.start()
+    # get_jobs()
     # dailyWeather()
+    # job1()

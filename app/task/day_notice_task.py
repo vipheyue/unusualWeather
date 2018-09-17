@@ -3,6 +3,10 @@ import time
 from app.notice.mail import send_email
 from app.weather.caiyun import check_unuaual_weather, realtime
 
+import logging
+from app.log.log_manager import initLog
+from app.log.test import testlog
+
 
 def job():
     # 121.6544,25.1552
@@ -38,9 +42,16 @@ def schedule_task():
         time.sleep(20)
 
 
-import logging
-from app.log.log_manager import initLog
-from app.log.test import testlog
+def test():
+    print(" test......")
+
+
+def schedule_task_test():
+    schedule.every(2).seconds.do(test)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 
 logger = logging.getLogger('main.task')
 if __name__ == '__main__':
@@ -48,4 +59,5 @@ if __name__ == '__main__':
     # logger.info("xcxcxc")
     # testlog()
 
-    schedule_task()
+    # schedule_task()
+    schedule_task_test()

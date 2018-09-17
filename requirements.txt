@@ -1,3 +1,4 @@
+APScheduler==3.5.3
 backports.functools-lru-cache==1.4
 certifi==2018.8.24
 chardet==3.0.4
@@ -16,6 +17,7 @@ pytz==2017.3
 requests==2.19.1
 schedule==0.5.0
 six==1.11.0
+tzlocal==1.5.1
 urllib3==1.23
 uWSGI==2.0.17.1
 Werkzeug==0.14.1

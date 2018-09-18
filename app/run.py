@@ -58,7 +58,7 @@ def scheduler_startJob():
     from app.task.task_manager import add_job
     add_job()
     scheduler_start()
-    return 'g_scheduler.startJob() scheduler_start'
+    return get_jobs()
 
 
 @app.route('/scheduler/get_jobs')

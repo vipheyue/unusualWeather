@@ -22,9 +22,9 @@ def initLog():
     # http_handler = HTTPHandler(host='localhost:8001', url='log', method='POST')
     # logger.addHandler(http_handler)
 
+initLog()
 
 if __name__ == '__main__':
-    initLog()
     logger = logging.getLogger('main')
     logger.info('This is a log info')
     logger.debug('Debugging')

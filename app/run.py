@@ -6,7 +6,7 @@ from flask import Flask, request, url_for
 import config
 
 from app.notice.mail import send_email
-from app.weather.caiyun import check_unuaual_weather, realtime
+from app.weather.caiyun import realtime, daily_forest
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -23,7 +23,7 @@ def unusual_weather():
         longitude = request.form['longitude']
         latitude = request.form['latitude']
         receiverEmail = request.form['receiverEmail']
-        result = check_unuaual_weather(longitude, latitude)
+        result = daily_forest(longitude, latitude)
         if result != '':
             # 发送邮件
             send_email(receiverEmail, result)
@@ -59,13 +59,6 @@ def scheduler_startJob():
     add_job()
     scheduler_start()
     return 'g_scheduler.startJob() scheduler_start'
-
-
-@app.route('/scheduler/print_jobs')
-def test2():
-    from app.task.task_manager import g_scheduler
-    g_scheduler.print_jobs()
-    return 'print_jobs'
 
 
 @app.route('/scheduler/get_jobs')

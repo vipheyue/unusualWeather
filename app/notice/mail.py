@@ -4,6 +4,8 @@ from email.mime.text import MIMEText
 
 
 def send_email(receiver, content):
+    if content == '':
+        return False
     msg_from = 'vipheyue@foxmail.com'  # 发送方邮箱
     passwd = 'tqaquuorzxxdbjdf'  # 填入发送方邮箱的授权码
 

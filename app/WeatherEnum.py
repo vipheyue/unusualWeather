@@ -1,5 +1,6 @@
 from enum import Enum, unique
 
+
 class WeatherEnum(Enum):
     CLEAR_DAY = "晴天"
     CLEAR_NIGHT = "晴夜"

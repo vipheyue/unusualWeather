@@ -35,7 +35,7 @@ def add_job():
     # g_scheduler.add_job(job1, 'interval', seconds=2)
     # g_scheduler.add_job(interval_rain_monitor, 'interval', seconds=10)
     # g_scheduler.add_job(dailyWeather, 'cron', hour=13, minute=14)
-    g_scheduler.add_job(dailyWeather, 'cron', hour=7, minute=25)
+    g_scheduler.add_job(dailyWeather, 'cron', hour=7, minute=20)
     g_scheduler.add_job(dailyWeather, 'cron', hour=18, minute=0)
 
     # g_scheduler.add_job(rain_post, 'cron', hour=7, minute=26)

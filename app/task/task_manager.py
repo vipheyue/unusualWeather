@@ -15,16 +15,6 @@ def job1():
     print("执行任务时间: %s" % time.asctime())
 
 
-def rain_post():
-    longitude = 116.298056  # 经度-何悦
-    latitude = 39.959912  # 纬度
-    # longitude = 121.6544  # 经度
-    # latitude = 25.1552  # 纬度
-    result = have_rain_detail(longitude, latitude)
-    if result != '':
-        send_email("vipheyue@foxmail.com", result)  # 发送邮件
-
-
 def dailyWeather():
     longitude = 116.298056  # 经度-何悦
     latitude = 39.959912  # 纬度
@@ -73,3 +63,6 @@ if __name__ == '__main__':
     # get_jobs()
     # dailyWeather()
     # job1()
+
+    from app.log.log_manager import get_log
+    get_log().info(".....")

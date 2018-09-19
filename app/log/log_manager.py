@@ -22,7 +22,14 @@ def initLog():
     # http_handler = HTTPHandler(host='localhost:8001', url='log', method='POST')
     # logger.addHandler(http_handler)
 
+
 initLog()
+
+
+def get_log():
+    logger = logging.getLogger('main')
+    return logger
+
 
 if __name__ == '__main__':
     logger = logging.getLogger('main')

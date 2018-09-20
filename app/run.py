@@ -7,9 +7,11 @@ import config
 
 from app.notice.mail import send_email
 from app.weather.caiyun import realtime, daily_forest
+from app.user.user import user_blueprints
 
 app = Flask(__name__)
 app.config.from_object(config)
+app.register_blueprint(user_blueprints, url_prefix='/user')
 
 
 @app.route('/', methods=['GET', 'POST'])

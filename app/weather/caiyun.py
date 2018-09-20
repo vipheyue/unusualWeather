@@ -1,7 +1,6 @@
 from pprint import pprint
 
 import requests
-from pip._internal.utils.deprecation import deprecated
 
 from app.WeatherEnum import WeatherEnum
 from app.weather.weather_bean import WeatherBean
@@ -61,18 +60,16 @@ def daily_temperature(json, weather_bean):
 
         temperature_arrow = "↗" if item["value"] >= temp_last else "↘"
 
-        temperature_upward_this = True
         if item["value"] >= temp_last:
             temperature_upward_this = True
         else:
             temperature_upward_this = False
 
         # temperature_buffer += str(last_date.hour) + "点(" + str(int(item["value"])) + temperature_arrow + ")  "
-        # temp_last = item["value"]
         # 添加过滤条件
         if temperature_upward_last != temperature_upward_this or index == 0 or index == len(temperature) - 1:
             temperature_buffer += str(last_date.hour) + "点(" + str(int(item["value"])) + "度" + temperature_arrow + ")  "
-            temp_last = item["value"]
+        temp_last = item["value"]
         temperature_upward_last = temperature_upward_this
         index += 1
 
@@ -96,7 +93,7 @@ def daily_aqi(json, weather_bean):
     return_resultl = f'当日污染最大值为:{aqi_max["value"]}\n'
     weather_bean.aqi_max = aqi_max
     weather_bean.aqi_desc = return_resultl
-    if weather_bean.aqi_max["value"] > 70:
+    if weather_bean.aqi_max["value"] > 80:
         weather_bean.aqi_needmasks = True
         weather_bean.aqi_suggest = f'戴口罩;'
     return weather_bean
@@ -110,9 +107,8 @@ def daily_forest(longitude, latitude):
     weather_bean = daily_aqi(json, weather_bean)
 
     rain_have_desc = "有" if weather_bean.rain_have == True else "无"
-    aqi_needmasks_desc = "戴" if weather_bean.aqi_needmasks == True else "否"
     result = f'雨({rain_have_desc}) 污染物({weather_bean.aqi_max["value"]})  温度:{weather_bean.temperature_desc}  \n' \
-             f'建议: {weather_bean.get_suggest()}'
+             f'{weather_bean.get_suggest()}'
              # f'\n{weather_bean.rain_desc}'\
 
     print(result)

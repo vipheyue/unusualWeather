@@ -16,6 +16,7 @@ app.register_blueprint(user_blueprints, url_prefix='/user')
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
+    print(" net hello world")
     return 'Hello, World!!!!+++ %s' % time.asctime()
 
 

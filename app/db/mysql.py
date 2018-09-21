@@ -8,19 +8,36 @@ connection = pymysql.connect(host='ali.welightworld.com',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 
-try:
+
+def create_users_table():
     with connection.cursor() as cursor:
-        cursor.execute("SELECT VERSION()")
-        data = cursor.fetchone()
-        print("Database version : %s " % data)
-        # Create a new record
-        sql = "INSERT INTO `users` (`email`, `password`) VALUES (%s, %s)"
-        cursor.execute(sql, ('webmaster@python.org', 'very-secret'))
+        # 使用预处理语句创建表
+        sql = """CREATE TABLE `test`.`users`  (
+  `userId` int(0) NOT NULL AUTO_INCREMENT,
+  `wechatId` varchar(0) NOT NULL,
+  PRIMARY KEY (`userId`)
+);"""
+        cursor.execute(sql)
 
-    # connection is not autocommit by default. So you must commit to save
-    # your changes.
-    connection.commit()
 
+def insert_user():
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT VERSION()")
+            data = cursor.fetchone()
+            print("Database version : %s " % data)
+            # Create a new record
+            sql = "INSERT INTO `users` (`email`, `password`) VALUES (%s, %s)"
+            cursor.execute(sql, ('webmaster@python.org', 'very-secret'))
+
+        # connection is not autocommit by default. So you must commit to save
+        # your changes.
+        connection.commit()
+    finally:
+        connection.close()
+
+
+def query_user():
     with connection.cursor() as cursor:
         # Read a single record
         sql = "SELECT `id`, `password` FROM `users` WHERE `email`=%s"
@@ -28,16 +45,7 @@ try:
         result = cursor.fetchone()
         print(result)
 
-        # 使用预处理语句创建表
-        # sql = """CREATE TABLE EMPLOYEE (
-        #          FIRST_NAME  CHAR(20) NOT NULL,
-        #          LAST_NAME  CHAR(20),
-        #          AGE INT,
-        #          SEX CHAR(1),
-        #          INCOME FLOAT )"""
-        # cursor.execute(sql)
-finally:
-    connection.close()
 
-
-
+if __name__ == '__main__':
+    create_users_table()
+    # insert_user()

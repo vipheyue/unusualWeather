@@ -1,17 +1,18 @@
 # encoding:utf-8
+import json
 from pprint import pprint
 import time
 
 from flask import Flask, request, url_for
-import config
-
+import requests
 from app.notice.mail import send_email
 from app.weather.caiyun import realtime, daily_forest
 from app.user.user import user_blueprints
+from app.weather.weather import weather_blueprints
 
 app = Flask(__name__)
-app.config.from_object(config)
 app.register_blueprint(user_blueprints, url_prefix='/user')
+app.register_blueprint(weather_blueprints, url_prefix='/weather')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -42,10 +43,11 @@ def send_mail():
     return str(result)
 
 
-@app.route('/user/<username>')
-def show_user_profile(username):
-    # show the user profile for that user
-    return 'User %s' % username
+@app.route('/bridge', methods=['GET', 'POST'])
+def bridge():
+    url = request.form['url']
+    json_string = json.dumps(requests.get(url).json())
+    return str(json_string)
 
 
 @app.route('/scheduler/start')
@@ -84,6 +86,10 @@ def application(env, start_response):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
     # hello_world()
     # schedule_task()
+
+# export FLASK_ENV=development
+# export FLASK_APP=run.py
+# flask run

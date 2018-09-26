@@ -45,6 +45,8 @@ def fadetop_start():
     # g_scheduler.add_job(fade_top, 'cron', hour='7-20/1', id=fadetop_id)
     g_scheduler.add_job(fade_top, 'interval', minutes=35, id=fadetop_id)
     # g_scheduler.add_job(fade_top, 'interval', seconds=5, id=fadetop_id)
+    # g_scheduler.add_job(fade_top, 'cron', hour=13, minute=37, id=str(uuid.uuid1()))
+
     if not g_scheduler.running:
         g_scheduler.start()
     return 'fadetopStart'

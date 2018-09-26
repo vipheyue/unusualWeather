@@ -4,6 +4,7 @@ class SingletonMetaclass(type):
         super().__init__(*args, **kwargs)
 
     def __call__(self, *args, **kwargs):
+
         if self.__instance is None:
             self.__instance = super(SingletonMetaclass, self).__call__(*args, **kwargs)
             return self.__instance

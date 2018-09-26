@@ -6,10 +6,10 @@ import time
 from flask import Flask, request, url_for
 import requests
 from app.notice.mail import send_email
+from app.task.task_manager import TaskManager
 from app.user.user import user_blueprints
 from app.weather.weather import weather_blueprints
 from app.task.scheduler import scheduler_blueprints
-
 
 app = Flask(__name__)
 app.register_blueprint(user_blueprints, url_prefix='/user')
@@ -21,8 +21,6 @@ app.register_blueprint(scheduler_blueprints, url_prefix='/scheduler')
 def hello_world():
     print(" net hello world")
     return 'Hello, World!!!!+++ %s' % time.asctime()
-
-
 
 
 @app.route('/sendMail', methods=['GET', 'POST'])
@@ -38,10 +36,11 @@ def bridge():
     return str(json_string)
 
 
+tm = TaskManager()
+g_scheduler = tm.g_scheduler
 if __name__ == '__main__':
     # app.run(host='0.0.0.0')
-    app.run(host='0.0.0.0',port=8080)
-
+    app.run(host='0.0.0.0', port=8080)
 
 # export FLASK_ENV=development
 # export FLASK_APP=run.py

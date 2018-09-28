@@ -19,6 +19,7 @@ def dailyWeather():
 
 @app.task(autoretry_for=(Exception,), default_retry_delay=60 * 3, retry_kwargs={'max_retries': 5})
 def interval_rain_monitor():
+    print("interval_rain_monitor")
     longitude = 116.298056  # 经度-何悦
     latitude = 39.959912  # 纬度
     result = rain_monitor(longitude, latitude)

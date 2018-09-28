@@ -27,7 +27,7 @@ beat_schedule = {
         'args': ()
     },
     'app.task.weather_task.dailyWeatherTEST': {
-        'task': 'app.task.weather_task.dailyWeather',
+        'task': 'app.task.weather_task.interval_rain_monitor',
         'schedule': crontab( hour='*/1'),
         'args': ()
     }

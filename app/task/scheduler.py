@@ -16,20 +16,20 @@ def scheduler_startJob():
     from app.task.task_manager import add_job
     add_job()
     scheduler_start()
-    return get_jobs()
+    return "."
 
 
-@scheduler_blueprints.route('/getJobs')
-def get_jobs():
-    from app.task.task_manager import get_jobs
-    return get_jobs()
+# @scheduler_blueprints.route('/getJobs')
+# def get_jobs():
+#     from app.task.task_manager import get_jobs
+#     return get_jobs()
 
-
-@scheduler_blueprints.route('/removeJobById', methods=['GET', 'POST'])
-def remove_job_by_id():
-    from app.task.task_manager import remove_job
-    jobId = request.form['jobId']
-    remove_job(jobId)
+#
+# @scheduler_blueprints.route('/removeJobById', methods=['GET', 'POST'])
+# def remove_job_by_id():
+#     from app.task.task_manager import remove_job
+#     jobId = request.form['jobId']
+#     remove_job(jobId)
     return "done"
 
 
@@ -52,12 +52,12 @@ def fadetop_start():
     return 'fadetopStart'
 
 
-@scheduler_blueprints.route('/fadetopShutdown')
-def fadetop_shutdown():
-    from app.task.task_manager import g_scheduler
-    from app.task.task_manager import remove_job
-    remove_job(fadetop_id)
-    return 'fadetopShutdown'
+# @scheduler_blueprints.route('/fadetopShutdown')
+# def fadetop_shutdown():
+#     from app.task.task_manager import g_scheduler
+#     from app.task.task_manager import remove_job
+#     remove_job(fadetop_id)
+#     return 'fadetopShutdown'
 
 
 def fade_top():

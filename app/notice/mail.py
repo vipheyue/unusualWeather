@@ -1,8 +1,11 @@
 # coding=utf-8
 import smtplib
+import time
 from email.mime.text import MIMEText
+from app.task.celeryapp import app
 
 
+@app.task(autoretry_for=(Exception,), retry_kwargs={'max_retries': 5})
 def send_email(receiver, content):
     if content == '':
         return False
@@ -18,10 +21,10 @@ def send_email(receiver, content):
         s = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 邮件服务器及端口号
         s.login(msg_from, passwd)
         s.sendmail(msg_from, receiver, msg.as_string())
-        print("发送成功")
+        print("发送成功:" + time.asctime())
         return True
     except s.SMTPException:
-        print("发送失败" + receiver + content)
+        print("发送失败:" + time.asctime() + receiver + content)
         return False
     finally:
         s.quit()

@@ -5,3 +5,7 @@ if __name__ == '__main__':
     r.set('foo', 'bar.....')
     result = r.get('foo')
     print(result)
+    result = r.keys()
+    print(result)
+
+

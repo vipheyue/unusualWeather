@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import uuid
 
 import time
@@ -19,9 +21,17 @@ def dailyWeather():
 
 @app.task(autoretry_for=(Exception,), default_retry_delay=60 * 3, retry_kwargs={'max_retries': 5})
 def interval_rain_monitor():
-    print("interval_rain_monitor")
+    print("interval_rain_monitor" + time.asctime())
+    result = send_email("vipheyue@foxmail.com", "邮件测试: " + time.asctime())
+
     longitude = 116.298056  # 经度-何悦
     latitude = 39.959912  # 纬度
     result = rain_monitor(longitude, latitude)
     if result != '':
         send_email("vipheyue@foxmail.com", result)  # 发送邮件
+
+
+if __name__ == '__main__':
+    print(dailyWeather)
+    print(dailyWeather.name)
+    # dailyWeather.delay()

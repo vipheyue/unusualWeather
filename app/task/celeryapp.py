@@ -1,3 +1,5 @@
+
+
 from celery import Celery
 from celery.utils.log import get_task_logger
 
@@ -5,11 +7,11 @@ logger = get_task_logger(__name__)
 
 # 默认的pip celery有问题
 # pip install --upgrade https://github.com/celery/celery/tarball/master
-app = Celery('celeryapp')
+app = Celery("app")
 
 app.config_from_object('app.task.celeryconfig')
 # 可见性超时
-app.conf.broker_transport_options = {'visibility_timeout': 60}
+# app.conf.broker_transport_options = {'visibility_timeout': 60}
 
 # app.conf.beat_schedule = {
 #     'add-every-30-seconds': {
@@ -43,5 +45,7 @@ from celery.schedules import crontab
 def test(arg):
     print(arg)
 
-# if __name__ == '__main__':
-# app.start()
+if __name__ == '__main__':
+#     print(app)
+#     print(app.main)
+    app.worker_main()

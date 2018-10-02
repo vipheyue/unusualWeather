@@ -1,7 +1,7 @@
 from app.task.celeryapp import app, test
-from app.task.weather_task import interval_rain_monitor
 
-@app.task(name='app.task.print_task')
+
+@app.task
 def print_task(x):
     print("--:       " + x)
 
@@ -14,8 +14,10 @@ def add(x, y):
     return x + y
 
 
+if __name__ == '__main__':
+    from app.notice.mail import send_email
 
-# if __name__ == '__main__':
+    result = send_email.delay("vipheyue@foxmail.com", "邮件测试 " + "x=" + str(1) + "  y=" + str(2))
     # task_send_mail.delay("邮件测试-----2")
     # result = add.apply_async((2, 2), link=add.s(16))
     # print(result)

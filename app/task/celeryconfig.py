@@ -11,7 +11,7 @@ result_backend = 'redis://localhost:6379/1'
 # accept_content = ['json']
 timezone = 'Asia/Shanghai'
 enable_utc = True
-imports = ("app.task.tasks")
+imports = ("app.task.tasks",'app.notice.mail')
 beat_schedule = {
     'taskA_schedule': {
         'task': 'app.task.tasks.add',
@@ -30,7 +30,7 @@ beat_schedule = {
         'args': ()
     },
     'app.task.weather_task.dailyWeatherTEST': {
-        'task': 'app.task.weather_task.interval_rain_monitor',
+        'task': 'app.task.daily.daily_task.interval_rain_monitor',
         'schedule': crontab(hour=13),
         'args': ()
     }

@@ -142,7 +142,7 @@ def rain_2h(json):
             rain_total += item
     if len(rain_list) > 0:
         rain_average = rain_total / len(rain_list)
-        result = f'异常天气!! \n{first_rain_index}分钟后有雨 两小时内下雨分钟数:{len(rain_list)}分钟 平均雨量 {rain_average}\n'
+        result = f'{first_rain_index}分钟后有雨 两小时内下雨分钟数:{len(rain_list)}分钟 平均雨量 {rain_average}\n'
         print(result)
         return result
     return ""

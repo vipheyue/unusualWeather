@@ -14,7 +14,7 @@ imports = ("app.task.tasks", 'app.notice.mail', 'app.task.weather_task')
 beat_schedule = {
     'taskA_schedule': {
         'task': 'app.task.tasks.add',
-        'schedule': crontab(hour=7, minute=20),
+        'schedule': crontab(hour=16, minute=49),
         'args': (5, 6)
     },
 
@@ -33,11 +33,11 @@ beat_schedule = {
         'schedule': crontab(hour='7-19/1'),
         'args': ()
     },
-    'app.task.weather_task.interval_rain_monitor_TEST': {
-        'task': 'app.task.weather_task.interval_rain_monitor',
-        'schedule': crontab(minute='*/1'),
-        'args': ()
-    },
+    # 'app.task.weather_task.interval_rain_monitor_TEST': {
+    #     'task': 'app.task.weather_task.interval_rain_monitor',
+    #     'schedule': crontab(minute='*/1'),
+    #     'args': ()
+    # },
 
 }
 

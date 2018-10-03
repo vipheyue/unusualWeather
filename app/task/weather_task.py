@@ -49,7 +49,7 @@ def interval_rain_monitor():
     for bean in data_list:
         if bean.active == True:
             # # 交给 celery 发邮件
-            result = send_email.apply_async((bean.email_receiver, "邮件测试: interval_rain_monitor -- " + time.asctime()))
+            # result = send_email.apply_async((bean.email_receiver, "邮件测试: interval_rain_monitor -- " + time.asctime()))
             longitude = bean.longitude  # 经度-何悦
             latitude = bean.latitude  # 纬度
             result = rain_monitor(longitude, latitude)

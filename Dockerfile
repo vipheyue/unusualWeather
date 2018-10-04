@@ -8,7 +8,7 @@ WORKDIR /unusualWeather
 ADD . /unusualWeather
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt &&  pip install --upgrade https://github.com/celery/celery/tarball/master && celery multi start w1 -A app.task.celeryapp -l info -B
+RUN pip install --trusted-host pypi.python.org -r requirements.txt &&  pip install --upgrade https://github.com/celery/celery/tarball/master
 
 # Make port 80 available to the world outside this container
 EXPOSE 5001

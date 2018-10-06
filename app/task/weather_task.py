@@ -31,8 +31,8 @@ def query_order_position():
         bean = WeatherBean()
         bean.active = True
         bean.email_receiver = "vipheyue@foxmail.com"
-        # bean.reminder_time = ["7:20", "18:00", "14:29"]
-        bean.reminder_time = ["15:12"]
+        bean.reminder_time = ["7:20", "18:00", "3:29"]
+        # bean.reminder_time = ["15:12"]
         bean.longitude = 116.298056
         bean.latitude = 39.959912
         data_list.append(bean)

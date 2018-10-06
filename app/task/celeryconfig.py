@@ -1,9 +1,9 @@
 import flower
 from celery.schedules import crontab
-broker_url = 'redis://s.welightworld.com:6379/0'
-result_backend = 'redis://s.welightworld.com:6379/1'
-# broker_url = 'redis://localhost:6379/0'
-# result_backend = 'redis://localhost:6379/1'
+# broker_url = 'redis://s.welightworld.com:6379/0'
+# result_backend = 'redis://s.welightworld.com:6379/1'
+broker_url = 'redis://localhost:6379/0'
+result_backend = 'redis://localhost:6379/1'
 
 # task_serializer = 'json'
 # result_serializer = 'json'
@@ -25,7 +25,7 @@ beat_schedule = {
     },
     'app.task.weather_task.dailyWeatherTEST': {
         'task': 'app.task.weather_task.dailyWeather',
-        'schedule': crontab(hour=11, minute=11),
+        'schedule': crontab(hour=15, minute=5),
         'args': ()
     },
     'app.task.weather_task.interval_rain_monitor': {

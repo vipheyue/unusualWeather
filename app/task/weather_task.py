@@ -31,7 +31,7 @@ def query_order_position():
         bean = WeatherBean()
         bean.active = True
         bean.email_receiver = "vipheyue@foxmail.com"
-        bean.reminder_time = ["7:20", "18:00", "3:29"]
+        bean.reminder_time = ["7:20", "18:00", "15:03"]
         # bean.reminder_time = ["15:12"]
         bean.longitude = 116.298056
         bean.latitude = 39.959912
@@ -59,9 +59,9 @@ def interval_rain_monitor():
 
 
 @app.task(autoretry_for=(Exception,), default_retry_delay=60 * 3, retry_kwargs={'max_retries': 5})
-def dailyWeather():
+def dailyWeather_countdown():
     '''
-    根据用户设定的时间,来发送天气提醒给用户
+    根据用户设定的时间,设置倒计时触发的时间点
     :return:
     '''
     data_list = query_order_position()
@@ -74,15 +74,28 @@ def dailyWeather():
                 datetime(local_dt.year, local_dt.month, local_dt.day, setting_dt.hour, setting_dt.minute))
             # # 交给 celery 发邮件
             # result = send_email.apply_async((bean.email_receiver, "邮件测试: " + time.asctime()), eta=send_dt)
+            print("dailyWeather_countdown ")
             longitude = bean.longitude  # 经度-何悦
             latitude = bean.latitude  # 纬度
-            result = daily_forest(longitude, latitude)+"  \n "+time.asctime()
-            send_email.apply_async((bean.email_receiver, result), eta=send_dt)
+            email_receiver = bean.email_receiver
+            dailyWeather.apply_async((longitude, latitude, email_receiver), eta=send_dt)
+
+
+@app.task(autoretry_for=(Exception,), default_retry_delay=60 * 3, retry_kwargs={'max_retries': 5})
+def dailyWeather(longitude, latitude, email_receiver):
+    '''
+     来发送天气提醒给用户
+    :return:
+    '''
+    print("dailyWeather" + str(longitude)+"    " + str(latitude) +"    "+ str(email_receiver))
+
+    # result = daily_forest(longitude, latitude) + "  \n " + time.asctime()
+    # send_email.apply_async((bean.email_receiver, result))
 
 
 if __name__ == '__main__':
     # interval_rain_monitor()
-    dailyWeather()
+    dailyWeather_countdown()
     # print(datetime.utcnow())
     # print(datetime.now())
     # from app.task.tasks import print_task

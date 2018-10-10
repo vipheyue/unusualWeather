@@ -45,7 +45,7 @@ from celery.schedules import crontab
 def test(arg):
     print(arg)
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 #     print(app)
 #     print(app.main)
-    app.worker_main()
+#     app.worker_main()

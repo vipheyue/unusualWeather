@@ -31,7 +31,7 @@ def query_order_position():
         bean = WeatherBean()
         bean.active = True
         bean.email_receiver = "vipheyue@foxmail.com"
-        bean.reminder_time = ["7:20", "18:00", "15:03"]
+        bean.reminder_time = ["7:20", "18:00", "16:50"]
         # bean.reminder_time = ["15:12"]
         bean.longitude = 116.298056
         bean.latitude = 39.959912
@@ -87,10 +87,10 @@ def dailyWeather(longitude, latitude, email_receiver):
      来发送天气提醒给用户
     :return:
     '''
-    print("dailyWeather" + str(longitude)+"    " + str(latitude) +"    "+ str(email_receiver))
+    # print("dailyWeather" + str(longitude)+"    " + str(latitude) +"    "+ str(email_receiver))
 
-    # result = daily_forest(longitude, latitude) + "  \n " + time.asctime()
-    # send_email.apply_async((bean.email_receiver, result))
+    result = daily_forest(longitude, latitude) + "  \n " + time.asctime()
+    send_email.apply_async((email_receiver, result))
 
 
 if __name__ == '__main__':

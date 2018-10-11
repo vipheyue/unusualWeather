@@ -31,7 +31,7 @@ def query_order_position():
         bean = WeatherBean()
         bean.active = True
         bean.email_receiver = "vipheyue@foxmail.com"
-        bean.reminder_time = ["7:20", "18:00", "16:50"]
+        bean.reminder_time = ["7:20", "18:00", "17:39"]
         # bean.reminder_time = ["15:12"]
         bean.longitude = 116.298056
         bean.latitude = 39.959912
@@ -68,8 +68,8 @@ def dailyWeather_countdown():
     for bean in data_list:
         for user_send_time in bean.reminder_time:
             setting_dt = datetime.strptime(user_send_time, "%H:%M")
-            local_dt = datetime.now()
             tz = pytz.timezone('Asia/Shanghai')
+            local_dt = datetime.now(tz)
             send_dt = tz.localize(
                 datetime(local_dt.year, local_dt.month, local_dt.day, setting_dt.hour, setting_dt.minute))
             # # 交给 celery 发邮件
